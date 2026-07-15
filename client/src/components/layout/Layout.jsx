@@ -3,12 +3,14 @@ import Footer from "./Footer";
 
 function Layout({ children }) {
   return (
-    <div className="bg-[#050816] text-white min-h-screen overflow-x-hidden">
+    <div className="bg-[#030712] text-white overflow-x-hidden">
+
       <Navbar />
 
-      <main>{children}</main>
+      {children}
 
       <Footer />
+
     </div>
   );
 }
