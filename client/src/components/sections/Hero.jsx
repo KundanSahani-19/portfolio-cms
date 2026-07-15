@@ -4,7 +4,10 @@ import Container from "../common/Container";
 
 function Hero() {
   return (
-    <section className="min-h-[90vh] flex items-center">
+    <section
+      id="home"
+      className="min-h-screen flex items-center pt-20"
+    >
       <Container>
         <div className="text-center">
 

@@ -3,7 +3,7 @@ import Container from "../common/Container";
 
 function About() {
   return (
-    <section className="py-24">
+    <section id="about" lassName="py-24" >
       <Container>
         <h2 className="text-4xl font-bold mb-8">
           {portfolioData.about.title}

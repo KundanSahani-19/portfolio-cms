@@ -1,46 +1,73 @@
 import { useState } from "react";
+import { Link } from "react-scroll";
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 
 const navItems = [
-  "About",
-  "Skills",
-  "Projects",
-  "Experience",
-  "Contact",
+  { title: "Home", to: "home" },
+  { title: "About", to: "about" },
 ];
 
 function Navbar() {
-  const [active, setActive] = useState("About");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-lg bg-black/30 border-b border-white/10">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-20 px-6">
+    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/30 border-b border-white/10">
+      <div className="max-w-7xl mx-auto h-20 flex items-center justify-between px-6">
 
         {/* Logo */}
-        <div className="text-2xl font-bold cursor-pointer">
+        <h1 className="text-2xl font-bold text-white cursor-pointer">
           Kundan<span className="text-cyan-400">.</span>
-        </div>
+        </h1>
 
-        {/* Navigation */}
-        <nav className="hidden md:flex gap-8">
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
-            <button
-              key={item}
-              onClick={() => setActive(item)}
-              className={`transition duration-300 hover:text-cyan-400 ${
-                active === item ? "text-cyan-400" : "text-white"
-              }`}
+            <Link
+              key={item.to}
+              to={item.to}
+              spy={true}
+              smooth={true}
+              duration={600}
+              offset={-80}
+              activeClass="text-cyan-400"
+              className="cursor-pointer text-white hover:text-cyan-400 transition"
             >
-              {item}
-            </button>
+              {item.title}
+            </Link>
           ))}
+
+          <button className="bg-cyan-400 text-black px-5 py-2 rounded-full font-semibold hover:scale-105 transition">
+            Hire Me
+          </button>
         </nav>
 
-        {/* Hire Me Button */}
-        <button className="bg-cyan-500 hover:bg-cyan-400 transition px-5 py-2 rounded-full font-semibold text-black">
-          Hire Me
+        {/* Mobile Icon */}
+        <button
+          className="md:hidden text-3xl text-white"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <HiOutlineX /> : <HiOutlineMenu />}
         </button>
-
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-[#0a0a0a] border-t border-white/10">
+          {navItems.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              smooth={true}
+              duration={600}
+              offset={-80}
+              onClick={() => setMenuOpen(false)}
+              className="block px-6 py-4 text-white hover:text-cyan-400 cursor-pointer"
+            >
+              {item.title}
+            </Link>
+          ))}
+        </div>
+      )}
     </header>
   );
 }
