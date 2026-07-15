@@ -1,5 +1,5 @@
 import Layout from "../components/layout/Layout";
-import Hero from "../components/sections/Hero";
+import Hero from "../components/sections/hero/Hero";
 import About from "../components/sections/About";
 
 function Home() {
