@@ -1,17 +1,29 @@
-import portfolioData from "../../data/portfolioData";
 import Container from "../common/Container";
+import SectionTitle from "../common/SectionTitle";
+import AboutContent from "./about/AboutContent";
+import AboutImage from "./about/AboutImage";
 
 function About() {
   return (
-    <section id="about" lassName="py-24" >
+    <section
+      id="about"
+      className="relative py-20 lg:py-24"
+    >
       <Container>
-        <h2 className="text-4xl font-bold mb-8">
-          {portfolioData.about.title}
-        </h2>
 
-        <p className="text-gray-400 text-lg leading-8">
-          {portfolioData.about.description}
-        </p>
+        <SectionTitle
+          subtitle="About Me"
+          title="Who Am I?"
+        />
+
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+
+          <AboutImage />
+
+          <AboutContent />
+
+        </div>
+
       </Container>
     </section>
   );

@@ -5,6 +5,12 @@ import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 const navItems = [
   { title: "Home", to: "home" },
   { title: "About", to: "about" },
+  { title: "Experience", to: "experience" },
+  { title: "Education", to: "education" },
+  { title: "Skills", to: "skills" },
+  { title: "Projects", to: "projects" },
+  { title: "Certificates", to: "certificates" },
+  { title: "Contact", to: "contact" },
 ];
 
 function Navbar() {

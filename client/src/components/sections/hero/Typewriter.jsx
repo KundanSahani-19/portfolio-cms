@@ -1,42 +1,50 @@
 import { useEffect, useState } from "react";
 
-const roles = [
-  "Full Stack Developer",
-  "MERN Stack Developer",
-  "Java Developer",
-  "ServiceNow CSA Certified",
-];
-
-function Typewriter() {
-  const [text, setText] = useState("");
+function Typewriter({ roles = [] }) {
   const [roleIndex, setRoleIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const currentRole = roles[roleIndex] || "";
 
   useEffect(() => {
-    const currentRole = roles[roleIndex];
+    if (!currentRole) return;
 
-    if (charIndex < currentRole.length) {
-      const timeout = setTimeout(() => {
-        setText((prev) => prev + currentRole[charIndex]);
-        setCharIndex((prev) => prev + 1);
-      }, 80);
+    const typingSpeed = isDeleting ? 50 : 100;
 
-      return () => clearTimeout(timeout);
-    } else {
-      const timeout = setTimeout(() => {
-        setText("");
-        setCharIndex(0);
-        setRoleIndex((prev) => (prev + 1) % roles.length);
-      }, 1500);
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        setText(currentRole.substring(0, text.length + 1));
 
-      return () => clearTimeout(timeout);
-    }
-  }, [charIndex, roleIndex]);
+        if (text === currentRole) {
+          setTimeout(() => {
+            setIsDeleting(true);
+          }, 1500);
+        }
+      } else {
+        setText(currentRole.substring(0, text.length - 1));
+
+        if (text === "") {
+          setIsDeleting(false);
+
+          setRoleIndex((prevIndex) => {
+            if (roles.length === 0) return 0;
+
+            return (prevIndex + 1) % roles.length;
+          });
+        }
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, currentRole, roles]);
 
   return (
-    <h2 className="text-3xl md:text-4xl font-bold text-cyan-400">
+    <h2 className="text-2xl md:text-3xl font-bold text-gray-300 min-h-[45px]">
       {text}
-      <span className="animate-pulse">|</span>
+      <span className="text-cyan-400 animate-pulse">
+        |
+      </span>
     </h2>
   );
 }
