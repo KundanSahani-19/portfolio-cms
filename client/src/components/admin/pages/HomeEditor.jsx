@@ -37,7 +37,7 @@ function HomeEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  const API = "https://YOUR-RENDER-URL.onrender.com/api/home";
+  const API = "const API = "https://portfolio-cms-backend-8jty.onrender.com/api/home";";
 
   // =========================
   // FETCH HOME DATA
