@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Skills() {
-  const API = "https://YOUR-RENDER-URL.onrender.com/api/skills";
+  const API = "https://portfolio-cms-backend-8jty.onrender.com/api/home";
 
   const [skills, setSkills] = useState([]);
 

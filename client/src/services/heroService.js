@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API = "https://YOUR-RENDER-URL.onrender.com/api/hero";
+const API =
+  "https://portfolio-cms-backend-8jty.onrender.com/api/hero";
 
 export const getHero = async () => {
   const res = await axios.get(API);

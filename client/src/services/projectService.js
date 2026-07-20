@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API =
-  "https://YOUR-RENDER-URL.onrender.com/api/projects";
+  "https://portfolio-cms-backend-8jty.onrender.com/api/projects";
 
 // =========================
 // GET ALL PROJECTS
