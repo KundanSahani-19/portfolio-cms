@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Messages() {
-  const API = "http://localhost:8000/api/messages";
+  const API = "https://YOUR-RENDER-URL.onrender.com/api/messages";
 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);

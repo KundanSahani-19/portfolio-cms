@@ -37,7 +37,7 @@ function HomeEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  const API = "http://localhost:8000/api/home";
+  const API = "https://YOUR-RENDER-URL.onrender.com/api/home";
 
   // =========================
   // FETCH HOME DATA

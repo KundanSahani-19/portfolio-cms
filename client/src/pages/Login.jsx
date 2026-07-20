@@ -26,7 +26,7 @@ function Login() {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:8000/api/auth/login",
+        "https://YOUR-RENDER-URL.onrender.com/api/auth/login",
         formData
       );
 

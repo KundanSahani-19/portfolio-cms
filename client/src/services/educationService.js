@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API =
-  "http://localhost:8000/api/educations";
+  "https://YOUR-RENDER-URL.onrender.com/api/educations";
 
 
 // GET ALL EDUCATION

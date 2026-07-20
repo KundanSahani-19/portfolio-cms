@@ -33,12 +33,12 @@ function Dashboard() {
         certificates,
         messages,
       ] = await Promise.all([
-        axios.get("http://localhost:8000/api/projects"),
-        axios.get("http://localhost:8000/api/skills"),
-        axios.get("http://localhost:8000/api/experiences"),
-        axios.get("http://localhost:8000/api/educations"),
-        axios.get("http://localhost:8000/api/certificates"),
-        axios.get("http://localhost:8000/api/messages", {
+        axios.get("https://YOUR-RENDER-URL.onrender.com/api/projects"),
+        axios.get("https://YOUR-RENDER-URL.onrender.com/api/skills"),
+        axios.get("https://YOUR-RENDER-URL.onrender.com/api/experiences"),
+        axios.get("https://YOUR-RENDER-URL.onrender.com/api/educations"),
+        axios.get("https://YOUR-RENDER-URL.onrender.com/api/certificates"),
+        axios.get("https://YOUR-RENDER-URL.onrender.com/api/messages", {
           headers,
         }),
       ]);

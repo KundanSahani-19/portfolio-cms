@@ -36,7 +36,7 @@ function ContactForm() {
       setLoading(true);
 
       await axios.post(
-        "http://localhost:8000/api/messages",
+        "https://YOUR-RENDER-URL.onrender.com/api/messages",
         form
       );
 
