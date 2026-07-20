@@ -20,8 +20,8 @@ function Hero() {
   const fetchHome = async () => {
     try {
       const response = await fetch(
-        "const API = "https://portfolio-cms-backend-8jty.onrender.com/api/home";"
-      );
+  "https://portfolio-cms-backend-8jty.onrender.com/api/home"
+);
 
       const data = await response.json();
 
