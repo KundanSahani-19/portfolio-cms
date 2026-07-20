@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "const API = "https://portfolio-cms-backend-8jty.onrender.com/api/home";";
+const API = const API = "https://portfolio-cms-backend-8jty.onrender.com/api/home";;
 
 export const getHome = async () => {
   const res = await axios.get(API);
