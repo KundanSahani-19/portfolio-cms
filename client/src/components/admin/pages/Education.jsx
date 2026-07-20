@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Education() {
-  const API = "https://YOUR-RENDER-URL.onrender.com/api/educations";
+  const API = "https://portfolio-cms-backend-8jty.onrender.com/api/educations";
 
   const [educations, setEducations] = useState([]);
 

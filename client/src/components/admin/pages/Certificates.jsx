@@ -3,7 +3,7 @@ import axios from "axios";
 
 function Certificates() {
   const API =
-    "https://portfolio-cms-backend-8jty.onrender.com/api/home";
+    "https://portfolio-cms-backend-8jty.onrender.com/api/certificates";
 
   const [certificates, setCertificates] =
     useState([]);

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Experience() {
-  const API = "https://YOUR-RENDER-URL.onrender.com/api/experiences";
+  const API = "https://portfolio-cms-backend-8jty.onrender.com/api/experiences";
 
   const [experiences, setExperiences] = useState([]);
 
