@@ -2,24 +2,26 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import Container from "../../common/Container";
-import { getExperiences } from "../../../services/experienceService";
+import { getEducations } from "../../../services/educationService";
 
-function Experience() {
-  const [experiences, setExperiences] = useState([]);
+function Education() {
+  const [educations, setEducations] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadExperiences();
+    loadEducations();
   }, []);
 
-  const loadExperiences = async () => {
+  const loadEducations = async () => {
     try {
-      const data = await getExperiences();
+      const data = await getEducations();
 
-      setExperiences(data || []);
+      console.log("Education Data:", data);
+
+      setEducations(data || []);
     } catch (error) {
       console.error(
-        "Failed to load experiences:",
+        "Failed to load education:",
         error
       );
     } finally {
@@ -29,7 +31,7 @@ function Experience() {
 
   return (
     <section
-      id="experience"
+      id="education"
       className="py-24"
     >
       <Container>
@@ -39,11 +41,11 @@ function Experience() {
         <div className="text-center mb-16">
 
           <p className="text-cyan-400 uppercase tracking-widest">
-            My Journey
+            Education
           </p>
 
           <h2 className="text-5xl font-bold mt-4">
-            Experience
+            Academic Journey
           </h2>
 
         </div>
@@ -52,153 +54,116 @@ function Experience() {
         {/* Loading */}
 
         {loading && (
+
           <p className="text-center text-gray-400">
-            Loading experience...
+            Loading education...
           </p>
+
         )}
 
 
-        {/* Experience List */}
+        {/* Education Cards */}
 
-        {!loading && experiences.length > 0 && (
+        {!loading && educations.length > 0 && (
 
-          <div className="relative max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            {/* Timeline Line */}
+            {educations.map((education, index) => (
 
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-cyan-400/30" />
+              <motion.div
+                key={education._id}
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.1,
+                }}
+                className="bg-[#0f172a] border border-white/10 rounded-2xl p-6 hover:border-cyan-400 duration-300"
+              >
+
+                {/* Degree */}
+
+                <h3 className="text-2xl font-bold">
+                  {education.degree}
+                </h3>
 
 
-            <div className="space-y-12">
+                {/* Institution */}
 
-              {experiences.map(
-                (experience, index) => (
+                <p className="text-cyan-400 text-lg mt-3">
+                  {education.institution}
+                </p>
 
-                  <motion.div
-                    key={experience._id}
-                    initial={{
-                      opacity: 0,
-                      y: 40,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                    }}
-                    transition={{
-                      duration: 0.6,
-                      delay: index * 0.1,
-                    }}
-                    className={`relative flex ${
-                      index % 2 === 0
-                        ? "md:justify-start"
-                        : "md:justify-end"
-                    }`}
+
+                {/* Location */}
+
+                {education.location && (
+
+                  <p className="text-gray-400 mt-3">
+                    📍 {education.location}
+                  </p>
+
+                )}
+
+
+                {/* Years */}
+
+                <p className="text-sm text-gray-500 mt-3">
+                  {education.startYear}
+                  {" - "}
+                  {education.endYear}
+                </p>
+
+
+                {/* Grade */}
+
+                {education.grade && (
+
+                  <p className="text-cyan-400 font-semibold mt-4">
+                    🎓 {education.grade}
+                  </p>
+
+                )}
+
+
+                {/* Description */}
+
+                {education.description && (
+
+                  <p className="text-gray-400 leading-7 mt-5">
+                    {education.description}
+                  </p>
+
+                )}
+
+
+                {/* Institution Link */}
+
+                {education.institutionUrl && (
+
+                  <a
+                    href={education.institutionUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-block mt-5 text-cyan-400 hover:underline"
                   >
+                    Visit Institution →
+                  </a>
 
-                    {/* Timeline Dot */}
+                )}
 
-                    <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-cyan-400 border-4 border-[#020617] z-10" />
+              </motion.div>
 
-
-                    {/* Card */}
-
-                    <div className="ml-12 md:ml-0 md:w-[45%] bg-[#0f172a] border border-white/10 rounded-2xl p-6 hover:border-cyan-400 duration-300">
-
-                      {/* Role */}
-
-                      <h3 className="text-2xl font-bold">
-                        {experience.role}
-                      </h3>
-
-
-                      {/* Company */}
-
-                      <p className="text-cyan-400 text-lg mt-1">
-                        {experience.company}
-                      </p>
-
-
-                      {/* Location */}
-
-                      {experience.location && (
-
-                        <p className="text-gray-400 mt-2">
-                          📍 {experience.location}
-                        </p>
-
-                      )}
-
-
-                      {/* Date */}
-
-                      <p className="text-sm text-gray-500 mt-3">
-                        {experience.startDate}
-                        {" - "}
-                        {experience.endDate}
-                      </p>
-
-
-                      {/* Description */}
-
-                      {experience.description && (
-
-                        <p className="text-gray-400 leading-7 mt-5">
-                          {experience.description}
-                        </p>
-
-                      )}
-
-
-                      {/* Technologies */}
-
-                      {experience.technologies?.length > 0 && (
-
-                        <div className="flex flex-wrap gap-2 mt-5">
-
-                          {experience.technologies.map(
-                            (tech, techIndex) => (
-
-                              <span
-                                key={techIndex}
-                                className="px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-400 text-sm"
-                              >
-                                {tech}
-                              </span>
-
-                            )
-                          )}
-
-                        </div>
-
-                      )}
-
-
-                      {/* Company Link */}
-
-                      {experience.companyUrl && (
-
-                        <a
-                          href={experience.companyUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-block mt-5 text-cyan-400 hover:underline"
-                        >
-                          Visit Company →
-                        </a>
-
-                      )}
-
-                    </div>
-
-                  </motion.div>
-
-                )
-              )}
-
-            </div>
+            ))}
 
           </div>
 
@@ -207,10 +172,10 @@ function Experience() {
 
         {/* Empty State */}
 
-        {!loading && experiences.length === 0 && (
+        {!loading && educations.length === 0 && (
 
           <p className="text-center text-gray-400">
-            No experience added yet.
+            No education added yet.
           </p>
 
         )}
@@ -221,4 +186,4 @@ function Experience() {
   );
 }
 
-export default Experience;
+export default Education;
