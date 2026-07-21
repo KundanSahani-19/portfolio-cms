@@ -1,35 +1,36 @@
-const experienceData = [
-  {
-    year: "2023",
-    title: "Started B.Tech CSE",
-    company: "ITM University, Gwalior",
-    description:
-      "Started my Computer Science journey and learned programming fundamentals.",
-  },
+import { useEffect, useState } from "react";
+import { getEducations } from "../../services/educationService";
 
-  {
-    year: "2024",
-    title: "Web Development",
-    company: "Self Learning",
-    description:
-      "Learned HTML, CSS, JavaScript, React, Node.js and MongoDB.",
-  },
+function Education() {
+  const [educations, setEducations] = useState([]);
 
-  {
-    year: "2025",
-    title: "Java & Spring Boot",
-    company: "Personal Projects",
-    description:
-      "Built multiple full-stack applications using Java, Spring Boot and MySQL.",
-  },
+  useEffect(() => {
+    const fetchEducation = async () => {
+      try {
+        const data = await getEducations();
+        setEducations(data);
+      } catch (error) {
+        console.error("Failed to fetch education:", error);
+      }
+    };
 
-  {
-    year: "2026",
-    title: "ServiceNow CSA Certified",
-    company: "ServiceNow",
-    description:
-      "Earned the ServiceNow Certified System Administrator certification and continued building enterprise-ready applications.",
-  },
-];
+    fetchEducation();
+  }, []);
 
-export default experienceData;
+  return (
+    <section>
+      {educations.map((education) => (
+        <div key={education._id}>
+          <h3>{education.degree}</h3>
+          <p>{education.institution}</p>
+          <p>
+            {education.startYear} - {education.endYear}
+          </p>
+          <p>{education.grade}</p>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+export default Education;
