@@ -7,7 +7,7 @@ function EducationTimeline() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadEducations = async () => {
+    const fetchEducations = async () => {
       try {
         const data = await getEducations();
 
@@ -15,21 +15,18 @@ function EducationTimeline() {
 
         setEducations(data || []);
       } catch (error) {
-        console.error(
-          "Failed to load education:",
-          error
-        );
+        console.error("Failed to fetch education:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    loadEducations();
+    fetchEducations();
   }, []);
 
   if (loading) {
     return (
-      <p className="text-center text-gray-400 mt-20">
+      <p className="text-center text-gray-400 mt-10">
         Loading education...
       </p>
     );
@@ -37,7 +34,7 @@ function EducationTimeline() {
 
   if (educations.length === 0) {
     return (
-      <p className="text-center text-gray-400 mt-20">
+      <p className="text-center text-gray-400 mt-10">
         No education added yet.
       </p>
     );
@@ -45,10 +42,10 @@ function EducationTimeline() {
 
   return (
     <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-20">
-      {educations.map((education) => (
+      {educations.map((item) => (
         <EducationCard
-          key={education._id}
-          item={education}
+          key={item._id}
+          item={item}
         />
       ))}
     </div>
