@@ -12,52 +12,30 @@ const {
 
 const protect = require("../middleware/authMiddleware");
 
-
-// =========================
-// PUBLIC
-// =========================
+// =================================
+// PUBLIC ROUTE
+// =================================
 
 // Contact form se message send hoga
-router.post(
-  "/",
-  createMessage
-);
+// Is route par login/token ki zarurat nahi hai
+router.post("/", createMessage);
 
 
-// =========================
-// ADMIN
-// =========================
+// =================================
+// ADMIN PROTECTED ROUTES
+// =================================
 
-// Admin messages dekh sakega
-router.get(
-  "/",
-  protect,
-  getMessages
-);
-
+// Admin ke messages
+router.get("/", protect, getMessages);
 
 // Single message
-router.get(
-  "/:id",
-  protect,
-  getMessage
-);
-
+router.get("/:id", protect, getMessage);
 
 // Mark as read
-router.put(
-  "/:id/read",
-  protect,
-  markMessageAsRead
-);
-
+router.put("/:id/read", protect, markMessageAsRead);
 
 // Delete message
-router.delete(
-  "/:id",
-  protect,
-  deleteMessage
-);
+router.delete("/:id", protect, deleteMessage);
 
 
 module.exports = router;
