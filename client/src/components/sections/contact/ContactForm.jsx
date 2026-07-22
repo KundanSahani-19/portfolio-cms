@@ -12,10 +12,6 @@ function ContactForm() {
     message: "",
   });
 
-  // =========================
-  // HANDLE INPUT
-  // =========================
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -25,20 +21,18 @@ function ContactForm() {
     }));
   };
 
-  // =========================
-  // SEND MESSAGE
-  // =========================
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       setLoading(true);
 
-      await axios.post(
-        "https://YOUR-RENDER-URL.onrender.com/api/messages",
+      const response = await axios.post(
+        "https://portfolio-cms-backend-8jty.onrender.com/api/messages",
         form
       );
+
+      console.log("Message response:", response.data);
 
       alert("✅ Message Sent Successfully 🚀");
 
@@ -69,13 +63,11 @@ function ContactForm() {
       className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-10"
     >
       {/* Glow */}
-
       <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-cyan-400/10 blur-3xl" />
 
       <div className="space-y-6 relative z-10">
 
         {/* NAME */}
-
         <div>
           <label className="block mb-2 text-gray-300">
             Full Name
@@ -93,7 +85,6 @@ function ContactForm() {
         </div>
 
         {/* EMAIL */}
-
         <div>
           <label className="block mb-2 text-gray-300">
             Email Address
@@ -111,7 +102,6 @@ function ContactForm() {
         </div>
 
         {/* MESSAGE */}
-
         <div>
           <label className="block mb-2 text-gray-300">
             Message
@@ -129,7 +119,6 @@ function ContactForm() {
         </div>
 
         {/* BUTTON */}
-
         <motion.button
           type="submit"
           whileHover={{ scale: 1.04 }}
