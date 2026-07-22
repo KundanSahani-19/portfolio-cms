@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Messages() {
-  const API = "https://YOUR-RENDER-URL.onrender.com/api/messages";
+  const API =
+    "https://portfolio-cms-backend-8jty.onrender.com/api/messages";
 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,10 +11,6 @@ function Messages() {
   // =========================
   // FETCH MESSAGES
   // =========================
-
-  useEffect(() => {
-    fetchMessages();
-  }, []);
 
   const fetchMessages = async () => {
     try {
@@ -25,16 +22,22 @@ function Messages() {
         },
       });
 
+      console.log("Messages:", response.data);
+
       setMessages(response.data || []);
     } catch (error) {
       console.error(
         "Failed to fetch messages:",
-        error
+        error.response?.data || error.message
       );
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
 
   // =========================
   // MARK AS READ
@@ -58,7 +61,7 @@ function Messages() {
     } catch (error) {
       console.error(
         "Failed to mark message as read:",
-        error
+        error.response?.data || error.message
       );
     }
   };
@@ -87,7 +90,10 @@ function Messages() {
 
       fetchMessages();
     } catch (error) {
-      console.error(error);
+      console.error(
+        "Failed to delete message:",
+        error.response?.data || error.message
+      );
 
       alert("❌ Failed to delete message");
     }
@@ -112,8 +118,6 @@ function Messages() {
   return (
     <div className="max-w-7xl mx-auto pb-20">
 
-      {/* TITLE */}
-
       <div className="flex items-center justify-between mb-8">
 
         <h1 className="text-4xl font-black">
@@ -125,9 +129,6 @@ function Messages() {
         </span>
 
       </div>
-
-
-      {/* EMPTY */}
 
       {messages.length === 0 ? (
 
@@ -147,7 +148,7 @@ function Messages() {
 
             <div
               key={message._id}
-              className={`bg-[#0f172a] border rounded-2xl p-6 duration-300 ${
+              className={`bg-[#0f172a] border rounded-2xl p-6 ${
                 message.isRead
                   ? "border-white/10"
                   : "border-cyan-400"
@@ -189,9 +190,6 @@ function Messages() {
                   )}
 
                 </div>
-
-
-                {/* DATE */}
 
                 <p className="text-gray-500 text-sm">
                   {new Date(
