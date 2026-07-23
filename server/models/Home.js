@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 
 const homeSchema = new mongoose.Schema(
   {
-    // Hero Section
+    // =========================
+    // HERO SECTION
+    // =========================
+
     greeting: {
       type: String,
       default: "👋 Hello, I'm",
@@ -38,7 +41,10 @@ const homeSchema = new mongoose.Schema(
       default: "Available for Internship & Full Time",
     },
 
-    // Buttons
+    // =========================
+    // BUTTONS
+    // =========================
+
     hireButton: {
       type: String,
       default: "Hire Me",
@@ -54,19 +60,70 @@ const homeSchema = new mongoose.Schema(
       default: "",
     },
 
-    // Social Links
-    social: {
-      github: String,
-      linkedin: String,
-      instagram: String,
-      twitter: String,
-      email: String,
-      website: String,
+    // =========================
+    // ABOUT SECTION
+    // =========================
+
+    about: {
+      description: {
+        type: String,
+        default: "",
+      },
+
+      experience: {
+        type: String,
+        default: "",
+      },
+
+      education: {
+        type: String,
+        default: "",
+      },
     },
 
-    // Floating Skills
+    // =========================
+    // SOCIAL LINKS
+    // =========================
+
+    social: {
+      github: {
+        type: String,
+        default: "",
+      },
+
+      linkedin: {
+        type: String,
+        default: "",
+      },
+
+      instagram: {
+        type: String,
+        default: "",
+      },
+
+      twitter: {
+        type: String,
+        default: "",
+      },
+
+      email: {
+        type: String,
+        default: "",
+      },
+
+      website: {
+        type: String,
+        default: "",
+      },
+    },
+
+    // =========================
+    // FLOATING SKILLS
+    // =========================
+
     floatingSkills: {
       type: [String],
+
       default: [
         "React",
         "Node.js",
@@ -77,7 +134,10 @@ const homeSchema = new mongoose.Schema(
       ],
     },
 
-    // Stats
+    // =========================
+    // STATISTICS
+    // =========================
+
     stats: {
       projects: {
         type: String,
@@ -95,6 +155,7 @@ const homeSchema = new mongoose.Schema(
       },
     },
   },
+
   {
     timestamps: true,
   }

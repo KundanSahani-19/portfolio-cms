@@ -13,6 +13,12 @@ function HomeEditor() {
     resumeButton: "",
     resumeUrl: "",
 
+    about: {
+      description: "",
+      experience: "",
+      education: "",
+},
+
     social: {
       github: "",
       linkedin: "",
@@ -63,6 +69,17 @@ function HomeEditor() {
           hireButton: res.data.hireButton || "",
           resumeButton: res.data.resumeButton || "",
           resumeUrl: res.data.resumeUrl || "",
+
+          about: {
+            description:
+              res.data.about?.description || "",
+
+            experience:
+              res.data.about?.experience || "",
+
+            education:
+              res.data.about?.education || "",
+  },
 
           social: {
             github: res.data.social?.github || "",
@@ -409,6 +426,69 @@ function HomeEditor() {
     </div>
 
   </div>
+
+
+
+
+  {/* ================= ABOUT CONTENT ================= */}
+
+<div className="bg-[#0f172a] border border-white/10 rounded-2xl p-6">
+
+  <h2 className="text-2xl font-bold text-cyan-400 mb-6">
+    👨‍💻 About Section
+  </h2>
+
+  <div className="space-y-5">
+
+    <textarea
+      value={home.about.description}
+      onChange={(e) =>
+        setHome((prev) => ({
+          ...prev,
+          about: {
+            ...prev.about,
+            description: e.target.value,
+          },
+        }))
+      }
+      placeholder="About Description"
+      rows="6"
+      className="w-full bg-[#020617] border border-white/10 p-4 rounded-xl"
+    />
+
+    <input
+      value={home.about.experience}
+      onChange={(e) =>
+        setHome((prev) => ({
+          ...prev,
+          about: {
+            ...prev.about,
+            experience: e.target.value,
+          },
+        }))
+      }
+      placeholder="Experience e.g. Fresher"
+      className="w-full bg-[#020617] border border-white/10 p-4 rounded-xl"
+    />
+
+    <input
+      value={home.about.education}
+      onChange={(e) =>
+        setHome((prev) => ({
+          ...prev,
+          about: {
+            ...prev.about,
+            education: e.target.value,
+          },
+        }))
+      }
+      placeholder="Education e.g. B.Tech CSE"
+      className="w-full bg-[#020617] border border-white/10 p-4 rounded-xl"
+    />
+
+  </div>
+
+</div>
 
 
   {/* ================= STATS ================= */}
