@@ -4,6 +4,7 @@ import Sidebar from "../components/admin/Sidebar";
 
 import Dashboard from "../components/admin/pages/Dashboard";
 import HomeEditor from "../components/admin/pages/HomeEditor";
+import AboutEditor from "../components/admin/pages/AboutEditor";
 import Projects from "../components/admin/pages/Projects";
 import Skills from "../components/admin/pages/Skills";
 import Experience from "../components/admin/pages/Experience";
@@ -22,6 +23,9 @@ function Admin() {
 
       case "home":
         return <HomeEditor />;
+
+      case "about":
+        return <AboutEditor />;
 
       case "projects":
         return <Projects />;
@@ -47,14 +51,21 @@ function Admin() {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#020617] text-white">
+    <div className="min-h-screen bg-[#020617] text-white">
 
-      <Sidebar
-        activePage={activePage}
-        setActivePage={setActivePage}
-      />
+      {/* FIXED SIDEBAR */}
 
-      <main className="flex-1 p-10 overflow-y-auto">
+      <div className="fixed left-0 top-0 h-screen w-72 z-50">
+        <Sidebar
+          activePage={activePage}
+          setActivePage={setActivePage}
+        />
+      </div>
+
+
+      {/* RIGHT SIDE CONTENT */}
+
+      <main className="ml-72 min-h-screen overflow-y-auto p-10">
         {renderPage()}
       </main>
 
