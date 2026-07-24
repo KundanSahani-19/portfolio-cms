@@ -4,15 +4,22 @@ function Stats({ stats }) {
   const statsData = [
     {
       number: stats?.projects || "0",
-      title: "Projects Completed",
+      title: "Projects",
     },
+
     {
       number: stats?.skills || "0",
       title: "Technologies",
     },
+
     {
       number: stats?.certificates || "0",
-      title: "Certificates",
+      title: "Certification",
+    },
+
+    {
+      number: "100%",
+      title: "Dedication",
     },
   ];
 

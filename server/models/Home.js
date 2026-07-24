@@ -61,25 +61,38 @@ const homeSchema = new mongoose.Schema(
     },
 
     // =========================
-    // ABOUT SECTION
-    // =========================
+// ABOUT SECTION
+// =========================
 
-    about: {
-      description: {
-        type: String,
-        default: "",
-      },
+about: {
+  title: {
+    type: String,
+    default: "About Me",
+  },
 
-      experience: {
-        type: String,
-        default: "",
-      },
+  description: {
+    type: String,
+    default:
+      "I'm Kundan Kumar Sahani, a passionate Full Stack Developer.",
+  },
 
-      education: {
-        type: String,
-        default: "",
-      },
-    },
+  experience: {
+    type: String,
+    default: "Fresher",
+  },
+
+  education: {
+    type: String,
+    default:
+      "B.Tech Computer Science & Engineering",
+  },
+
+  university: {
+    type: String,
+    default:
+      "ITM University, Gwalior",
+  },
+},
 
     // =========================
     // SOCIAL LINKS

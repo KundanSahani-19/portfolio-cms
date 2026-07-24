@@ -6,13 +6,19 @@ function AboutEditor() {
     "https://portfolio-cms-backend-8jty.onrender.com/api/home";
 
   const [about, setAbout] = useState({
+    title: "",
     description: "",
     experience: "",
     education: "",
+    university: "",
   });
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  // =========================
+  // FETCH ABOUT DATA
+  // =========================
 
   useEffect(() => {
     fetchAbout();
@@ -23,9 +29,11 @@ function AboutEditor() {
       const response = await axios.get(API);
 
       setAbout({
+        title: response.data.about?.title || "",
         description: response.data.about?.description || "",
         experience: response.data.about?.experience || "",
         education: response.data.about?.education || "",
+        university: response.data.about?.university || "",
       });
     } catch (error) {
       console.error("Failed to fetch About:", error);
@@ -33,6 +41,10 @@ function AboutEditor() {
       setLoading(false);
     }
   };
+
+  // =========================
+  // HANDLE INPUT CHANGE
+  // =========================
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,6 +54,10 @@ function AboutEditor() {
       [name]: value,
     }));
   };
+
+  // =========================
+  // SAVE ABOUT
+  // =========================
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,6 +75,7 @@ function AboutEditor() {
       });
 
       alert("✅ About section updated successfully!");
+
     } catch (error) {
       console.error("Failed to update About:", error);
 
@@ -66,10 +83,15 @@ function AboutEditor() {
         error.response?.data?.message ||
           "❌ Failed to update About section"
       );
+
     } finally {
       setSaving(false);
     }
   };
+
+  // =========================
+  // LOADING
+  // =========================
 
   if (loading) {
     return (
@@ -78,6 +100,10 @@ function AboutEditor() {
       </div>
     );
   }
+
+  // =========================
+  // UI
+  // =========================
 
   return (
     <div className="max-w-5xl mx-auto pb-20">
@@ -90,6 +116,30 @@ function AboutEditor() {
         onSubmit={handleSubmit}
         className="bg-[#0f172a] border border-white/10 rounded-2xl p-8 space-y-6"
       >
+
+        {/* =========================
+            ABOUT TITLE
+        ========================= */}
+
+        <div>
+          <label className="block mb-2 text-gray-300">
+            About Title
+          </label>
+
+          <input
+            type="text"
+            name="title"
+            value={about.title}
+            onChange={handleChange}
+            placeholder="Example: About Me"
+            className="w-full bg-[#020617] border border-white/10 rounded-xl p-4 text-white outline-none focus:border-cyan-400"
+          />
+        </div>
+
+
+        {/* =========================
+            DESCRIPTION
+        ========================= */}
 
         <div>
           <label className="block mb-2 text-gray-300">
@@ -106,12 +156,18 @@ function AboutEditor() {
           />
         </div>
 
+
+        {/* =========================
+            EXPERIENCE
+        ========================= */}
+
         <div>
           <label className="block mb-2 text-gray-300">
             Experience
           </label>
 
           <input
+            type="text"
             name="experience"
             value={about.experience}
             onChange={handleChange}
@@ -120,26 +176,59 @@ function AboutEditor() {
           />
         </div>
 
+
+        {/* =========================
+            EDUCATION
+        ========================= */}
+
         <div>
           <label className="block mb-2 text-gray-300">
             Education
           </label>
 
           <input
+            type="text"
             name="education"
             value={about.education}
             onChange={handleChange}
-            placeholder="Example: B.Tech CSE"
+            placeholder="Example: B.Tech Computer Science & Engineering"
             className="w-full bg-[#020617] border border-white/10 rounded-xl p-4 text-white outline-none focus:border-cyan-400"
           />
         </div>
+
+
+        {/* =========================
+            UNIVERSITY
+        ========================= */}
+
+        <div>
+          <label className="block mb-2 text-gray-300">
+            University
+          </label>
+
+          <input
+            type="text"
+            name="university"
+            value={about.university}
+            onChange={handleChange}
+            placeholder="Example: ITM University, Gwalior"
+            className="w-full bg-[#020617] border border-white/10 rounded-xl p-4 text-white outline-none focus:border-cyan-400"
+          />
+        </div>
+
+
+        {/* =========================
+            SAVE BUTTON
+        ========================= */}
 
         <button
           type="submit"
           disabled={saving}
           className="w-full bg-cyan-400 text-black font-bold py-4 rounded-xl hover:bg-cyan-300 transition disabled:opacity-50"
         >
-          {saving ? "Saving..." : "💾 Save About Changes"}
+          {saving
+            ? "Saving..."
+            : "💾 Save About Changes"}
         </button>
 
       </form>
