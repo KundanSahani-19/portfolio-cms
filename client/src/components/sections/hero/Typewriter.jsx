@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 function Typewriter({ roles = [] }) {
   const [roleIndex, setRoleIndex] = useState(0);
@@ -40,11 +41,15 @@ function Typewriter({ roles = [] }) {
   }, [text, isDeleting, currentRole, roles]);
 
   return (
-    <h2 className="text-2xl md:text-3xl font-bold text-gray-300 min-h-[45px]">
+    <h2 className="text-2xl md:text-3xl font-bold text-[#4A4A4A] min-h-[45px]">
       {text}
-      <span className="text-cyan-400 animate-pulse">
+      <motion.span
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ duration: 0.8, repeat: Infinity }}
+        className="text-[#1C1C1C]"
+      >
         |
-      </span>
+      </motion.span>
     </h2>
   );
 }

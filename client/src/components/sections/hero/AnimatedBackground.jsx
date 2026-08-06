@@ -8,14 +8,14 @@ function AnimatedBackground() {
       {particles.map((_, index) => (
         <motion.div
           key={index}
-          className="absolute w-2 h-2 rounded-full bg-cyan-400/30"
+          className="absolute w-2 h-2 rounded-full bg-[#1C1C1C]/20"
           initial={{
             x: Math.random() * window.innerWidth,
             y: Math.random() * window.innerHeight,
           }}
           animate={{
             y: [null, -100],
-            opacity: [0.2, 1, 0.2],
+            opacity: [0.15, 0.6, 0.15],
           }}
           transition={{
             duration: 4 + Math.random() * 6,

@@ -1,34 +1,16 @@
-import { useEffect, useState } from "react";
-import { FaArrowUp } from "react-icons/fa";
+import { motion, useScroll } from "framer-motion";
 
-function ScrollToTop() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const scroll = () => {
-      setShow(window.scrollY > 500);
-    };
-
-    window.addEventListener("scroll", scroll);
-
-    return () => window.removeEventListener("scroll", scroll);
-  }, []);
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
 
   return (
-    show && (
-      <button
-        onClick={() =>
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          })
-        }
-        className="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-cyan-400 text-black flex items-center justify-center shadow-xl hover:scale-110 duration-300 z-50"
-      >
-        <FaArrowUp />
-      </button>
-    )
+    <div className="fixed top-0 left-0 right-0 h-1.5 bg-white/40 backdrop-blur-sm z-[9999]">
+      <motion.div
+        style={{ scaleX: scrollYProgress }}
+        className="h-full origin-left bg-gradient-to-r from-[#DADDD8] via-[#6B6B6B] to-[#1C1C1C] shadow-[0_0_12px_rgba(28,28,28,0.4)]"
+      />
+    </div>
   );
 }
 
-export default ScrollToTop;
+export default ScrollProgress;

@@ -12,7 +12,7 @@ import AnimatedBackground from "../common/AnimatedBackground";
 
 function Layout({ children }) {
   return (
-    <div className="bg-[#030712] text-white overflow-x-hidden">
+    <div className="bg-[#FAFAFF] text-[#1C1C1C] overflow-x-hidden">
 
       <BackgroundGrid />
 

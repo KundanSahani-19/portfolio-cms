@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import {
   getProjects,
@@ -144,203 +145,274 @@ function ProjectsEditor() {
     setProject(emptyProject);
   };
 
+  const inputClass =
+    "w-full bg-white/40 backdrop-blur-xl text-[#1C1C1C] placeholder:text-[#8A8A8A] p-4 rounded-2xl outline-none " +
+    "shadow-[inset_3px_3px_8px_rgba(28,28,28,0.1),inset_-3px_-3px_8px_rgba(255,255,255,0.8)] " +
+    "focus:shadow-[inset_3px_3px_8px_rgba(28,28,28,0.14),inset_-3px_-3px_8px_rgba(255,255,255,0.9),0_0_0_2px_rgba(28,28,28,0.15)] " +
+    "transition-all duration-300";
+
   if (loading) {
     return (
-      <div className="text-white text-xl">
+      <motion.div
+        animate={{ opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 1.2, repeat: Infinity }}
+        className="text-[#1C1C1C] text-xl"
+      >
         Loading Projects...
-      </div>
+      </motion.div>
     );
   }
 
   return (
     <div className="max-w-7xl mx-auto pb-20">
 
-      <h1 className="text-4xl font-black mb-8">
+      <motion.h1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-4xl font-black mb-8 text-[#1C1C1C]"
+      >
         Projects Editor
-      </h1>
+      </motion.h1>
 
       {/* ================= FORM ================= */}
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-[#0f172a] border border-white/10 rounded-2xl p-6 space-y-6"
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative p-[1.5px] rounded-3xl bg-gradient-to-br from-white to-[#DADDD8]/70"
       >
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white/35 backdrop-blur-2xl rounded-[22px] p-6 space-y-6 shadow-[0_12px_32px_rgba(28,28,28,0.08),inset_0_1px_0_rgba(255,255,255,0.85)]"
+        >
 
-        <h2 className="text-2xl font-bold text-cyan-400">
-          {editingId
-            ? "✏️ Edit Project"
-            : "➕ Add New Project"}
-        </h2>
-
-        <input
-          name="title"
-          value={project.title}
-          onChange={handleChange}
-          placeholder="Project Title"
-          required
-          className="w-full bg-[#020617] border border-white/10 p-4 rounded-xl"
-        />
-
-        <textarea
-          name="description"
-          value={project.description}
-          onChange={handleChange}
-          placeholder="Project Description"
-          rows="5"
-          required
-          className="w-full bg-[#020617] border border-white/10 p-4 rounded-xl"
-        />
-
-        <input
-          name="image"
-          value={project.image}
-          onChange={handleChange}
-          placeholder="Project Image URL"
-          className="w-full bg-[#020617] border border-white/10 p-4 rounded-xl"
-        />
-
-        <div className="flex gap-3">
+          <h2 className="text-2xl font-bold text-[#1C1C1C]">
+            {editingId
+              ? "✏️ Edit Project"
+              : "➕ Add New Project"}
+          </h2>
 
           <input
-            value={newTech}
-            onChange={(e) => setNewTech(e.target.value)}
-            placeholder="Example: React"
-            className="flex-1 bg-[#020617] border border-white/10 p-4 rounded-xl"
+            name="title"
+            value={project.title}
+            onChange={handleChange}
+            placeholder="Project Title"
+            required
+            className={inputClass}
           />
 
-          <button
-            type="button"
-            onClick={addTech}
-            className="bg-cyan-400 text-black px-6 rounded-xl font-bold"
-          >
-            Add
-          </button>
+          <textarea
+            name="description"
+            value={project.description}
+            onChange={handleChange}
+            placeholder="Project Description"
+            rows="5"
+            required
+            className={inputClass}
+          />
 
-        </div>
+          <input
+            name="image"
+            value={project.image}
+            onChange={handleChange}
+            placeholder="Project Image URL"
+            className={inputClass}
+          />
 
-        <div className="flex flex-wrap gap-3">
+          <div className="flex gap-3">
 
-          {project.techStack.map((tech, index) => (
-            <div
-              key={index}
-              className="flex gap-2 items-center bg-[#020617] px-4 py-2 rounded-xl"
-            >
-              <span>{tech}</span>
+            <input
+              value={newTech}
+              onChange={(e) => setNewTech(e.target.value)}
+              placeholder="Example: React"
+              className={`flex-1 ${inputClass}`}
+            />
 
-              <button
-                type="button"
-                onClick={() => removeTech(index)}
-                className="text-red-400"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-
-        </div>
-
-        <input
-          name="github"
-          value={project.github}
-          onChange={handleChange}
-          placeholder="GitHub URL"
-          className="w-full bg-[#020617] border border-white/10 p-4 rounded-xl"
-        />
-
-        <input
-          name="liveDemo"
-          value={project.liveDemo}
-          onChange={handleChange}
-          placeholder="Live Demo URL"
-          className="w-full bg-[#020617] border border-white/10 p-4 rounded-xl"
-        />
-
-        <div className="flex gap-4">
-
-          <button
-            type="submit"
-            disabled={saving}
-            className="flex-1 bg-cyan-400 text-black py-4 rounded-xl font-bold"
-          >
-            {saving
-              ? "Saving..."
-              : editingId
-              ? "Update Project"
-              : "Add Project"}
-          </button>
-
-          {editingId && (
-            <button
+            <motion.button
               type="button"
-              onClick={cancelEdit}
-              className="px-8 bg-gray-700 rounded-xl"
+              onClick={addTech}
+              whileHover={{ y: -2, scale: 1.03 }}
+              whileTap={{ y: 1, scale: 0.96 }}
+              className="px-6 rounded-2xl font-bold text-[#FAFAFF]
+                bg-gradient-to-b from-[#3A3A3A] to-[#1C1C1C]
+                shadow-[0_4px_0_#000000,0_8px_14px_-2px_rgba(28,28,28,0.35),inset_0_1px_1px_rgba(255,255,255,0.15)]"
             >
-              Cancel
-            </button>
-          )}
+              Add
+            </motion.button>
 
-        </div>
+          </div>
 
-      </form>
+          <div className="flex flex-wrap gap-3">
+
+            <AnimatePresence>
+              {project.techStack.map((tech, index) => (
+                <motion.div
+                  key={tech + index}
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.7 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  className="flex gap-2 items-center bg-[#ECEBE4] px-4 py-2 rounded-xl
+                    shadow-[3px_3px_6px_rgba(28,28,28,0.12),-3px_-3px_6px_rgba(255,255,255,0.9)]"
+                >
+                  <span className="text-[#1C1C1C] text-sm">{tech}</span>
+
+                  <motion.button
+                    type="button"
+                    onClick={() => removeTech(index)}
+                    whileHover={{ scale: 1.2, rotate: 90 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-rose-500"
+                  >
+                    ✕
+                  </motion.button>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
+          </div>
+
+          <input
+            name="github"
+            value={project.github}
+            onChange={handleChange}
+            placeholder="GitHub URL"
+            className={inputClass}
+          />
+
+          <input
+            name="liveDemo"
+            value={project.liveDemo}
+            onChange={handleChange}
+            placeholder="Live Demo URL"
+            className={inputClass}
+          />
+
+          <div className="flex gap-4">
+
+            <motion.button
+              type="submit"
+              disabled={saving}
+              whileHover={{ y: -3, scale: 1.02 }}
+              whileTap={{ y: 1, scale: 0.97 }}
+              className="flex-1 py-4 rounded-2xl font-bold text-[#FAFAFF] relative overflow-hidden
+                bg-gradient-to-b from-[#3A3A3A] to-[#1C1C1C]
+                shadow-[0_4px_0_#000000,0_8px_16px_-2px_rgba(28,28,28,0.35),inset_0_1px_1px_rgba(255,255,255,0.15)]
+                disabled:opacity-60"
+            >
+              {!saving && (
+                <motion.span
+                  initial={{ x: "-150%" }}
+                  animate={{ x: "150%" }}
+                  transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -skew-x-12"
+                />
+              )}
+              <span className="relative">
+                {saving
+                  ? "Saving..."
+                  : editingId
+                  ? "Update Project"
+                  : "Add Project"}
+              </span>
+            </motion.button>
+
+            {editingId && (
+              <motion.button
+                type="button"
+                onClick={cancelEdit}
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.96 }}
+                className="px-8 rounded-2xl text-[#1C1C1C] bg-white/40 backdrop-blur-xl
+                  shadow-[4px_4px_10px_rgba(28,28,28,0.1),-4px_-4px_10px_rgba(255,255,255,0.85)]"
+              >
+                Cancel
+              </motion.button>
+            )}
+
+          </div>
+
+        </form>
+      </motion.div>
 
       {/* ================= PROJECT LIST ================= */}
 
       <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        {projects.map((item) => (
-          <div
+        {projects.map((item, i) => (
+          <motion.div
             key={item._id}
-            className="bg-[#0f172a] border border-white/10 rounded-2xl p-5"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ delay: (i % 3) * 0.1, duration: 0.5 }}
+            whileHover={{ y: -6 }}
+            className="relative p-[1.5px] rounded-3xl bg-gradient-to-br from-white to-[#DADDD8]/70"
           >
+            <div className="bg-white/35 backdrop-blur-2xl rounded-[22px] p-5 shadow-[0_10px_28px_rgba(28,28,28,0.08),inset_0_1px_0_rgba(255,255,255,0.85)]">
 
-            {item.image && (
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-48 object-cover rounded-xl mb-4"
-              />
-            )}
+              {item.image && (
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-48 object-cover rounded-xl mb-4 shadow-[0_6px_16px_rgba(28,28,28,0.15)]"
+                />
+              )}
 
-            <h3 className="text-xl font-bold">
-              {item.title}
-            </h3>
+              <h3 className="text-xl font-bold text-[#1C1C1C]">
+                {item.title}
+              </h3>
 
-            <p className="text-gray-400 mt-2">
-              {item.description}
-            </p>
+              <p className="text-[#6B6B6B] mt-2 text-sm">
+                {item.description}
+              </p>
 
-            <div className="flex flex-wrap gap-2 mt-4">
+              <div className="flex flex-wrap gap-2 mt-4">
 
-              {item.techStack?.map((tech, index) => (
-                <span
-                  key={index}
-                  className="text-sm bg-cyan-400/10 text-cyan-300 px-3 py-1 rounded-full"
+                {item.techStack?.map((tech, index) => (
+                  <span
+                    key={index}
+                    className="text-xs bg-[#ECEBE4] text-[#4A4A4A] px-3 py-1 rounded-full
+                      shadow-[2px_2px_5px_rgba(28,28,28,0.1),-2px_-2px_5px_rgba(255,255,255,0.9)]"
+                  >
+                    {tech}
+                  </span>
+                ))}
+
+              </div>
+
+              <div className="flex gap-3 mt-5">
+
+                <motion.button
+                  onClick={() => handleEdit(item)}
+                  whileHover={{ y: -2, scale: 1.02 }}
+                  whileTap={{ y: 1, scale: 0.96 }}
+                  className="flex-1 py-2.5 rounded-xl font-semibold text-[#FAFAFF] text-sm
+                    bg-gradient-to-b from-sky-400 to-sky-600
+                    shadow-[0_3px_0_#0369A1,0_6px_12px_-2px_rgba(2,132,199,0.35)]"
                 >
-                  {tech}
-                </span>
-              ))}
+                  Edit
+                </motion.button>
+
+                <motion.button
+                  onClick={() => handleDelete(item._id)}
+                  whileHover={{ y: -2, scale: 1.02 }}
+                  whileTap={{ y: 1, scale: 0.96 }}
+                  className="flex-1 py-2.5 rounded-xl font-semibold text-[#FAFAFF] text-sm
+                    bg-gradient-to-b from-rose-400 to-rose-600
+                    shadow-[0_3px_0_#9F1239,0_6px_12px_-2px_rgba(190,18,60,0.35)]"
+                >
+                  Delete
+                </motion.button>
+
+              </div>
 
             </div>
-
-            <div className="flex gap-3 mt-5">
-
-              <button
-                onClick={() => handleEdit(item)}
-                className="flex-1 bg-blue-500 py-2 rounded-lg"
-              >
-                Edit
-              </button>
-
-              <button
-                onClick={() => handleDelete(item._id)}
-                className="flex-1 bg-red-500 py-2 rounded-lg"
-              >
-                Delete
-              </button>
-
-            </div>
-
-          </div>
+          </motion.div>
         ))}
 
       </div>

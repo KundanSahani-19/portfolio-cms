@@ -3,6 +3,17 @@
 body {
   margin: 0;
   padding: 0;
-  background: #050816;
+  background: #fafaff;
+  color: #1c1c1c;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes shine {
+  0%,
+  100% {
+    transform: translateX(-150%) rotate(12deg);
+  }
+  50% {
+    transform: translateX(250%) rotate(12deg);
+  }
 }

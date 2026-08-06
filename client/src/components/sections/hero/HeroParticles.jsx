@@ -7,10 +7,9 @@ function HeroParticles() {
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
       {particles.map((_, i) => (
-
         <motion.div
           key={i}
-          className="absolute rounded-full bg-cyan-400/30 blur-sm"
+          className="absolute rounded-full bg-[#1C1C1C]/15 blur-sm"
           style={{
             width: Math.random() * 8 + 4,
             height: Math.random() * 8 + 4,
@@ -20,7 +19,7 @@ function HeroParticles() {
           animate={{
             y: [-20, 20, -20],
             x: [-10, 10, -10],
-            opacity: [0.2, 1, 0.2],
+            opacity: [0.15, 0.6, 0.15],
           }}
           transition={{
             duration: Math.random() * 6 + 6,
@@ -28,7 +27,6 @@ function HeroParticles() {
             ease: "easeInOut",
           }}
         />
-
       ))}
 
     </div>

@@ -1,90 +1,112 @@
 import { useEffect, useState } from "react";
-
+import { motion } from "framer-motion";
 import { getEducations } from "../../../services/educationService";
-
 import EducationCard from "./EducationCard";
 
 function EducationTimeline() {
-  const [educations, setEducations] = useState([]);
 
-  const [loading, setLoading] = useState(true);
+  const [educations,setEducations]=useState([]);
+  const [loading,setLoading]=useState(true);
+  const [error,setError]=useState("");
 
-  const [error, setError] = useState("");
+  useEffect(()=>{
+    fetchEducation();
+  },[]);
 
-  useEffect(() => {
-    fetchEducations();
-  }, []);
+  const fetchEducation=async()=>{
 
-  const fetchEducations = async () => {
-    try {
-      setLoading(true);
+    try{
 
-      const data = await getEducations();
+      const data=await getEducations();
 
-      console.log("Education Data:", data);
+      setEducations(Array.isArray(data)?data:[]);
 
-      if (Array.isArray(data)) {
-        setEducations(data);
-      } else {
-        setEducations([]);
-      }
+    }catch{
 
-    } catch (error) {
+      setError("Unable to load education.");
 
-      console.error(
-        "Failed to fetch education:",
-        error
-      );
-
-      setError(
-        "Failed to load education."
-      );
-
-    } finally {
+    }finally{
 
       setLoading(false);
 
     }
+
   };
 
-  if (loading) {
-    return (
-      <p className="text-center text-gray-400 mt-10">
-        Loading education...
+  if(loading){
+    return(
+      <p className="text-center mt-16 text-gray-400">
+        Loading...
       </p>
     );
   }
 
-  if (error) {
-    return (
-      <p className="text-center text-red-400 mt-10">
+  if(error){
+    return(
+      <p className="text-center mt-16 text-red-400">
         {error}
       </p>
     );
   }
 
-  if (educations.length === 0) {
-    return (
-      <p className="text-center text-gray-400 mt-10">
-        No education added yet.
-      </p>
-    );
-  }
+  return(
 
-  return (
-    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-20">
+    <motion.div
 
-      {educations.map((item) => (
+      initial="hidden"
 
-        <EducationCard
+      whileInView="show"
+
+      viewport={{once:true}}
+
+      variants={{
+        hidden:{},
+        show:{
+          transition:{
+            staggerChildren:.18
+          }
+        }
+      }}
+
+      className="
+      grid
+      md:grid-cols-2
+      xl:grid-cols-3
+      gap-8
+      mt-20
+      "
+
+    >
+
+      {educations.map(item=>(
+
+        <motion.div
+
           key={item._id}
-          item={item}
-        />
+
+          variants={{
+            hidden:{
+              opacity:0,
+              y:30
+            },
+            show:{
+              opacity:1,
+              y:0
+            }
+          }}
+
+        >
+
+          <EducationCard item={item}/>
+
+        </motion.div>
 
       ))}
 
-    </div>
+    </motion.div>
+
   );
+
 }
 
 export default EducationTimeline;
