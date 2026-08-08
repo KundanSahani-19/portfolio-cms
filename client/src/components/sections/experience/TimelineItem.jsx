@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { FaBriefcase, FaGraduationCap } from "react-icons/fa";
+import { FaBriefcase } from "react-icons/fa";
+import ExperienceCard from "./ExperienceCard";
 
 function TimelineItem({ item, index }) {
   const isLeft = index % 2 === 0;
@@ -8,65 +9,87 @@ function TimelineItem({ item, index }) {
     <motion.div
       initial={{
         opacity: 0,
-        x: isLeft ? -80 : 80,
+        x: isLeft ? -100 : 100,
       }}
       whileInView={{
         opacity: 1,
         x: 0,
       }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
-      className={`relative flex items-center mb-16 ${
-        isLeft ? "justify-start" : "justify-end"
-      }`}
+      viewport={{
+        once: true,
+      }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.15,
+      }}
+      className={`
+        relative
+        flex
+        items-center
+        mb-20
+        ${
+          isLeft
+            ? "lg:justify-start"
+            : "lg:justify-end"
+        }
+      `}
     >
-      {/* Center Line Dot */}
-      <div className="absolute left-1/2 -translate-x-1/2 z-20">
+      {/* Timeline Icon */}
 
+      <div
+        className="
+        hidden
+        lg:flex
+        absolute
+        left-1/2
+        -translate-x-1/2
+        z-20
+        "
+      >
         <motion.div
-          whileHover={{ scale: 1.2 }}
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center shadow-[0_0_35px_rgba(34,211,238,.5)]"
+          animate={{ scale: [1, 1.08, 1] }}
+          transition={{
+            duration: 2.4,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: index * 0.2,
+          }}
+          whileHover={{
+            scale: 1.15,
+            rotate: 10,
+          }}
+          className="
+          w-14
+          h-14
+          rounded-full
+          bg-[#1C1C1C]
+          border-4
+          border-[#FAFAFF]
+          flex
+          items-center
+          justify-center
+          shadow-[0_15px_35px_rgba(28,28,28,.25)]
+          "
         >
-          {item.type === "education" ? (
-            <FaGraduationCap className="text-white text-xl" />
-          ) : (
-            <FaBriefcase className="text-white text-xl" />
-          )}
+          <FaBriefcase className="text-white text-lg" />
         </motion.div>
-
       </div>
 
-      {/* Card */}
-      <motion.div
-        whileHover={{
-          y: -10,
-          scale: 1.02,
-        }}
-        transition={{ duration: 0.3 }}
-        className={`w-[44%] rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 p-8 hover:border-cyan-400 duration-300 ${
-          isLeft ? "mr-auto" : "ml-auto"
-        }`}
+      {/* Left / Right Card */}
+
+      <div
+        className={`
+          w-full
+          lg:w-[38%]
+          ${
+            isLeft
+              ? "lg:mr-auto"
+              : "lg:ml-auto"
+          }
+        `}
       >
-        {/* Year */}
-        <span className="inline-block px-4 py-2 rounded-full bg-cyan-400/10 text-cyan-400 text-sm font-semibold mb-5">
-          {item.year}
-        </span>
-
-        {/* Title */}
-        <h2 className="text-2xl font-bold">
-          {item.title}
-        </h2>
-
-        {/* Company */}
-        <p className="text-cyan-400 mt-2">
-          {item.company}
-        </p>
-
-        {/* Description */}
-        <p className="text-gray-400 leading-8 mt-5">
-          {item.description}
-        </p>
-      </motion.div>
+        <ExperienceCard item={item} />
+      </div>
     </motion.div>
   );
 }

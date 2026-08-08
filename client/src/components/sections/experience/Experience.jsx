@@ -1,189 +1,85 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-
 import Container from "../../common/Container";
-import { getEducations } from "../../../services/educationService";
+import Timeline from "./Timeline";
 
-function Education() {
-  const [educations, setEducations] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadEducations();
-  }, []);
-
-  const loadEducations = async () => {
-    try {
-      const data = await getEducations();
-
-      console.log("Education Data:", data);
-
-      setEducations(data || []);
-    } catch (error) {
-      console.error(
-        "Failed to load education:",
-        error
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
+function Experience() {
   return (
     <section
-      id="education"
-      className="py-24"
+      id="experience"
+      className="relative py-28 overflow-hidden"
     >
+      {/* Background Glow */}
+
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+
+        <div className="absolute left-1/2 top-40 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[#DADDD8]/25 blur-[140px]" />
+
+        <div className="absolute -top-40 -left-32 w-[350px] h-[350px] rounded-full bg-[#ECEBE4]/30 blur-[120px]" />
+
+        <div className="absolute bottom-0 right-0 w-[300px] h-[300px] rounded-full bg-[#EEF0F2]/40 blur-[120px]" />
+
+      </div>
+
       <Container>
 
         {/* Heading */}
 
-        <div className="text-center mb-16">
+        <div className="text-center mb-24">
 
-          <p className="text-cyan-400 uppercase tracking-widest">
-            Education
-          </p>
+          <span
+            className="
+            inline-flex
+            items-center
+            gap-2
+            px-6
+            py-2
+            rounded-full
+            bg-white
+            border
+            border-[#DADDD8]
+            shadow-lg
+            text-[#1C1C1C]
+            font-semibold
+            tracking-widest
+            uppercase
+            "
+          >
+            My Journey
+          </span>
 
-          <h2 className="text-5xl font-bold mt-4">
-            Academic Journey
+          <h2
+            className="
+            mt-8
+            text-6xl
+            font-black
+            text-[#1C1C1C]
+            "
+          >
+            Experience
           </h2>
+
+          <p
+            className="
+            mt-6
+            max-w-2xl
+            mx-auto
+            text-lg
+            leading-8
+            text-gray-600
+            "
+          >
+            My professional experience and the journey that helped me
+            become a better Full Stack Developer.
+          </p>
 
         </div>
 
+        {/* Timeline */}
 
-        {/* Loading */}
-
-        {loading && (
-
-          <p className="text-center text-gray-400">
-            Loading education...
-          </p>
-
-        )}
-
-
-        {/* Education Cards */}
-
-        {!loading && educations.length > 0 && (
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            {educations.map((education, index) => (
-
-              <motion.div
-                key={education._id}
-                initial={{
-                  opacity: 0,
-                  y: 40,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                }}
-                className="bg-[#0f172a] border border-white/10 rounded-2xl p-6 hover:border-cyan-400 duration-300"
-              >
-
-                {/* Degree */}
-
-                <h3 className="text-2xl font-bold">
-                  {education.degree}
-                </h3>
-
-
-                {/* Institution */}
-
-                <p className="text-cyan-400 text-lg mt-3">
-                  {education.institution}
-                </p>
-
-
-                {/* Location */}
-
-                {education.location && (
-
-                  <p className="text-gray-400 mt-3">
-                    📍 {education.location}
-                  </p>
-
-                )}
-
-
-                {/* Years */}
-
-                <p className="text-sm text-gray-500 mt-3">
-                  {education.startYear}
-                  {" - "}
-                  {education.endYear}
-                </p>
-
-
-                {/* Grade */}
-
-                {education.grade && (
-
-                  <p className="text-cyan-400 font-semibold mt-4">
-                    🎓 {education.grade}
-                  </p>
-
-                )}
-
-
-                {/* Description */}
-
-                {education.description && (
-
-                  <p className="text-gray-400 leading-7 mt-5">
-                    {education.description}
-                  </p>
-
-                )}
-
-
-                {/* Institution Link */}
-
-                {education.institutionUrl && (
-
-                  <a
-                    href={education.institutionUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-block mt-5 text-cyan-400 hover:underline"
-                  >
-                    Visit Institution →
-                  </a>
-
-                )}
-
-              </motion.div>
-
-            ))}
-
-          </div>
-
-        )}
-
-
-        {/* Empty State */}
-
-        {!loading && educations.length === 0 && (
-
-          <p className="text-center text-gray-400">
-            No education added yet.
-          </p>
-
-        )}
+        <Timeline />
 
       </Container>
-
     </section>
   );
 }
 
-export default Education;
+export default Experience;

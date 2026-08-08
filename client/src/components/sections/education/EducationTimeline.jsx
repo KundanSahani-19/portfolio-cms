@@ -4,109 +4,81 @@ import { getEducations } from "../../../services/educationService";
 import EducationCard from "./EducationCard";
 
 function EducationTimeline() {
+  const [educations, setEducations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const [educations,setEducations]=useState([]);
-  const [loading,setLoading]=useState(true);
-  const [error,setError]=useState("");
-
-  useEffect(()=>{
+  useEffect(() => {
     fetchEducation();
-  },[]);
+  }, []);
 
-  const fetchEducation=async()=>{
+  const fetchEducation = async () => {
+    try {
+      console.log("Fetching Education...");
 
-    try{
+      const data = await getEducations();
 
-      const data=await getEducations();
+      console.log("API Response :", data);
+      console.log("Is Array :", Array.isArray(data));
+      console.log("Length :", data?.length);
 
-      setEducations(Array.isArray(data)?data:[]);
-
-    }catch{
-
+      setEducations(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Education Error :", err);
       setError("Unable to load education.");
-
-    }finally{
-
+    } finally {
       setLoading(false);
-
     }
-
   };
 
-  if(loading){
-    return(
-      <p className="text-center mt-16 text-gray-400">
-        Loading...
-      </p>
+  console.log("Current State :", educations);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center mt-16">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="w-10 h-10 rounded-full border-4 border-[#1C1C1C] border-t-transparent"
+        />
+      </div>
     );
   }
 
-  if(error){
-    return(
-      <p className="text-center mt-16 text-red-400">
+  if (error) {
+    return (
+      <p className="text-center text-red-500 mt-16">
         {error}
       </p>
     );
   }
 
-  return(
+  if (educations.length === 0) {
+    return (
+      <p className="text-center text-gray-500 mt-16">
+        No Education Found
+      </p>
+    );
+  }
 
-    <motion.div
+  return (
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-20">
+      {educations.map((item) => {
+        console.log("Rendering Card :", item);
 
-      initial="hidden"
-
-      whileInView="show"
-
-      viewport={{once:true}}
-
-      variants={{
-        hidden:{},
-        show:{
-          transition:{
-            staggerChildren:.18
-          }
-        }
-      }}
-
-      className="
-      grid
-      md:grid-cols-2
-      xl:grid-cols-3
-      gap-8
-      mt-20
-      "
-
-    >
-
-      {educations.map(item=>(
-
-        <motion.div
-
-          key={item._id}
-
-          variants={{
-            hidden:{
-              opacity:0,
-              y:30
-            },
-            show:{
-              opacity:1,
-              y:0
-            }
-          }}
-
-        >
-
-          <EducationCard item={item}/>
-
-        </motion.div>
-
-      ))}
-
-    </motion.div>
-
+        return (
+          <EducationCard
+            key={item._id}
+            item={item}
+          />
+        );
+      })}
+    </div>
   );
-
 }
 
 export default EducationTimeline;

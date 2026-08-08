@@ -4,7 +4,8 @@ import Layout from "../components/layout/Layout";
 
 import Hero from "../components/sections/hero/Hero";
 import About from "../components/sections/About";
-import Experience from "../components/sections/Experience";
+import Experience from "../components/sections/experience/Experience";
+
 import Education from "../components/sections/education/Education";
 import Skills from "../components/sections/Skills";
 import Projects from "../components/sections/Projects";

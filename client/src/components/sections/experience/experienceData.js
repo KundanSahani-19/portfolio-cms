@@ -1,36 +1,85 @@
-import { useEffect, useState } from "react";
-import { getEducations } from "../../services/educationService";
+const experienceData = [
+  {
+    _id: 1,
 
-function Education() {
-  const [educations, setEducations] = useState([]);
+    year: "2026 - Present",
 
-  useEffect(() => {
-    const fetchEducation = async () => {
-      try {
-        const data = await getEducations();
-        setEducations(data);
-      } catch (error) {
-        console.error("Failed to fetch education:", error);
-      }
-    };
+    title: "AI & Full Stack Developer",
 
-    fetchEducation();
-  }, []);
+    company: "Personal Projects",
 
-  return (
-    <section>
-      {educations.map((education) => (
-        <div key={education._id}>
-          <h3>{education.degree}</h3>
-          <p>{education.institution}</p>
-          <p>
-            {education.startYear} - {education.endYear}
-          </p>
-          <p>{education.grade}</p>
-        </div>
-      ))}
-    </section>
-  );
-}
+    description:
+      "Building modern AI-powered web applications using React, Node.js, Express, MongoDB, Flask, Python and integrating Large Language Models with scalable backend architecture.",
 
-export default Education;
+    skills: [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Express",
+      "Python",
+      "AI",
+    ],
+  },
+
+  {
+    _id: 2,
+
+    year: "2025",
+
+    title: "WordPress Developer Intern",
+
+    company: "Internship",
+
+    description:
+      "Worked on responsive websites, customized WordPress themes, optimized website performance and improved user experience.",
+
+    skills: [
+      "WordPress",
+      "HTML",
+      "CSS",
+      "JavaScript",
+    ],
+  },
+
+  {
+    _id: 3,
+
+    year: "2024",
+
+    title: "Frontend Developer",
+
+    company: "Personal Portfolio",
+
+    description:
+      "Designed and developed responsive portfolio websites with modern animations, reusable components and clean UI using React and Tailwind CSS.",
+
+    skills: [
+      "React",
+      "Tailwind",
+      "Framer Motion",
+      "UI/UX",
+    ],
+  },
+
+  {
+    _id: 4,
+
+    year: "2023",
+
+    title: "B.Tech Computer Science",
+
+    company: "ITM University, Gwalior",
+
+    description:
+      "Started Computer Science Engineering with focus on Web Development, AI, Data Structures and Software Engineering.",
+
+    skills: [
+      "C",
+      "Java",
+      "DSA",
+      "DBMS",
+    ],
+  },
+];
+
+export default experienceData;

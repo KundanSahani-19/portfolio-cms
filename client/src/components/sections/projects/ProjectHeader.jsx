@@ -6,7 +6,7 @@ function ProjectHeader({ title }) {
 
       layout
 
-      className="text-2xl font-bold group-hover:text-cyan-400 duration-300"
+      className="text-2xl font-bold text-[#1C1C1C] group-hover:text-[#4A4A4A] duration-300"
 
     >
       {title}

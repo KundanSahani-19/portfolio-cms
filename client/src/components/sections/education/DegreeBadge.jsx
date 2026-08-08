@@ -7,16 +7,23 @@ function DegreeBadge({ year }) {
         y: -2,
         scale: 1.05,
       }}
+      animate={{
+        boxShadow: [
+          "0 6px 16px rgba(28,28,28,0.3), inset 0 1px 1px rgba(255,255,255,0.5)",
+          "0 8px 22px rgba(28,28,28,0.4), inset 0 1px 1px rgba(255,255,255,0.6)",
+          "0 6px 16px rgba(28,28,28,0.3), inset 0 1px 1px rgba(255,255,255,0.5)",
+        ],
+      }}
       transition={{
-        type: "spring",
-        stiffness: 280,
-        damping: 18,
+        boxShadow: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+        default: { type: "spring", stiffness: 280, damping: 18 },
       }}
       className="
       relative
       inline-flex
       items-center
       justify-center
+      gap-2
       overflow-hidden
 
       px-5
@@ -25,20 +32,21 @@ function DegreeBadge({ year }) {
       rounded-full
 
       bg-gradient-to-b
-      from-[#3B3B3B]
-      to-[#1F1F1F]
+      from-[#3A3A3A]
+      to-[#1C1C1C]
 
-      border
-      border-white/10
-
-      text-[#ECEBE4]
+      text-[#FAFAFF]
       font-semibold
       text-sm
       tracking-wide
-
-      shadow-[0_8px_20px_rgba(0,0,0,.35),inset_0_1px_0_rgba(255,255,255,.08)]
     "
     >
+      <motion.span
+        animate={{ opacity: [1, 0.4, 1], scale: [1, 1.3, 1] }}
+        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        className="w-1.5 h-1.5 rounded-full bg-[#DADDD8] relative z-10"
+      />
+
       <motion.div
         animate={{
           x: ["-150%", "180%"],
@@ -55,7 +63,7 @@ function DegreeBadge({ year }) {
 
         bg-gradient-to-r
         from-transparent
-        via-white/20
+        via-white/25
         to-transparent
 
         -skew-x-12

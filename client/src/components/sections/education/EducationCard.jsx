@@ -1,11 +1,38 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import DegreeBadge from "./DegreeBadge";
 
 function EducationCard({ item }) {
   if (!item) return null;
 
+  const ref = useRef(null);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 20 });
+
+  const rotateX = useTransform(springY, [-100, 100], [6, -6]);
+  const rotateY = useTransform(springX, [-100, 100], [-6, 6]);
+
+  const handleMouseMove = (e) => {
+    const rect = ref.current.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left - rect.width / 2);
+    mouseY.set(e.clientY - rect.top - rect.height / 2);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
     <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
       initial={{
         opacity: 0,
         y: 60,
@@ -40,19 +67,21 @@ function EducationCard({ item }) {
 
         bg-gradient-to-br
 
-        from-white/20
-        via-white/5
+        from-white
+        via-[#DADDD8]/60
         to-transparent
       "
       >
 
-        <div className="w-full h-full rounded-[30px] bg-[#090909]" />
+        <div className="w-full h-full rounded-[30px] bg-[#FAFAFF]" />
 
       </div>
 
       {/* Glow */}
 
-      <div
+      <motion.div
+        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         className="
         absolute
 
@@ -68,8 +97,16 @@ function EducationCard({ item }) {
 
         blur-[80px]
 
-        bg-[#DADDD8]/10
+        bg-[#DADDD8]/50
       "
+      />
+
+      {/* Floating decorative dot */}
+
+      <motion.div
+        animate={{ y: [0, -10, 0], x: [0, 6, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-gradient-to-br from-white to-[#DADDD8] shadow-[0_6px_16px_rgba(28,28,28,0.15)] z-20"
       />
 
       {/* Card */}
@@ -82,15 +119,13 @@ function EducationCard({ item }) {
 
         rounded-[30px]
 
-        bg-[#111111]
+        bg-white/40
 
-        border
-
-        border-white/10
+        backdrop-blur-2xl
 
         p-8
 
-        shadow-[0_25px_60px_rgba(0,0,0,.55)]
+        shadow-[0_20px_50px_rgba(28,28,28,.1),inset_0_1px_0_rgba(255,255,255,.85)]
 
         transition-all
 
@@ -133,7 +168,7 @@ function EducationCard({ item }) {
 
           from-transparent
 
-          via-white/10
+          via-white/60
 
           to-transparent
         "
@@ -141,7 +176,9 @@ function EducationCard({ item }) {
 
         {/* Ambient Glow */}
 
-        <div
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           className="
           absolute
 
@@ -155,7 +192,7 @@ function EducationCard({ item }) {
 
           rounded-full
 
-          bg-[#DADDD8]/5
+          bg-[#DADDD8]/40
 
           blur-[90px]
         "
@@ -180,9 +217,11 @@ function EducationCard({ item }) {
 
           font-black
 
-          text-[#FAFAFF]
+          text-[#1C1C1C]
 
           leading-tight
+          relative
+          z-10
         "
 
         >
@@ -201,7 +240,9 @@ function EducationCard({ item }) {
 
           font-semibold
 
-          text-[#DADDD8]
+          text-[#4A4A4A]
+          relative
+          z-10
         "
         >
 
@@ -224,12 +265,19 @@ function EducationCard({ item }) {
 
             gap-2
 
-            text-[#9CA3AF]
+            text-[#6B6B6B]
+            relative
+            z-10
           "
 
           >
 
-            <span>📍</span>
+            <motion.span
+              animate={{ y: [0, -2, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              📍
+            </motion.span>
 
             <span>
 
@@ -262,32 +310,31 @@ function EducationCard({ item }) {
 
             rounded-2xl
 
-            bg-[#1A1A1A]
-
-            border
-
-            border-white/10
+            bg-[#ECEBE4]
 
             px-5
 
             py-3
+            relative
+            z-10
 
-            shadow-[0_8px_20px_rgba(0,0,0,.35)]
+            shadow-[3px_3px_8px_rgba(28,28,28,.1),-3px_-3px_8px_rgba(255,255,255,.9)]
           "
 
           >
 
-            <span>
-
+            <motion.span
+              animate={{ rotate: [0, -12, 12, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+            >
               🎓
-
-            </span>
+            </motion.span>
 
             <span
               className="
               font-semibold
 
-              text-[#ECEBE4]
+              text-[#1C1C1C]
             "
             >
 
@@ -309,7 +356,9 @@ function EducationCard({ item }) {
               mt-6
               text-[15px]
               leading-8
-              text-[#A8A8A8]
+              text-[#6B6B6B]
+              relative
+              z-10
             "
           >
             {item.description}
@@ -325,7 +374,9 @@ function EducationCard({ item }) {
             rel="noreferrer"
             whileHover={{
               x: 6,
+              scale: 1.03,
             }}
+            whileTap={{ scale: 0.97 }}
             transition={{
               type: "spring",
               stiffness: 250,
@@ -338,23 +389,22 @@ function EducationCard({ item }) {
 
               rounded-xl
 
-              bg-[#1B1B1B]
-
-              border
-              border-white/10
+              bg-white/50
 
               px-5
               py-3
+              relative
+              z-10
 
-              text-[#ECEBE4]
+              text-[#1C1C1C]
               font-semibold
 
-              hover:bg-[#252525]
+              hover:bg-white/70
 
               transition-all
               duration-300
 
-              shadow-[0_8px_20px_rgba(0,0,0,.30)]
+              shadow-[3px_3px_10px_rgba(28,28,28,.1),-3px_-3px_10px_rgba(255,255,255,.9)]
             "
           >
             Visit University

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 function ProjectImage({ image, title }) {
   return (
-    <div className="relative h-64 overflow-hidden">
+    <div className="relative h-64 overflow-hidden rounded-t-[22px]">
 
       <motion.img
         src={image}
@@ -16,7 +16,7 @@ function ProjectImage({ image, title }) {
         className="w-full h-full object-cover"
       />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1C1C1C]/70 via-[#1C1C1C]/10 to-transparent" />
 
     </div>
   );
